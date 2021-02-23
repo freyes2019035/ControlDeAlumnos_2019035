@@ -1,7 +1,7 @@
 'use strict';
 const cursoModel = require('../models/cursos.model');
 const userModel = require('../models/user.model')
-const ObjectID = require("mongodb").ObjectID;
+const pdfGenerator = require('../utils/pdf/pdf.generator')
 exports.createCurso = (req, res) => {
     let curso = new cursoModel();
     const {nombre} = req.body;
@@ -88,7 +88,6 @@ exports.listarCursos = (req, res) => {
         }
     })
 }
-
 exports.createDefault = (req, res) => {
     let curso = new cursoModel();
     curso.nombre = "default"
@@ -108,4 +107,12 @@ exports.createDefault = (req, res) => {
             })
         }
     })
+}
+exports.createPDF = async (req, res) => {
+    let obj = [];
+    const alumno_Id = req.user.sub;
+    await userModel.findOne({_id: alumno_Id}).populate('cursos').then((data) => {
+        obj = data;
+    })
+   await pdfGenerator.generatePDF(obj).then(data => res.download(data.filename))
 }
