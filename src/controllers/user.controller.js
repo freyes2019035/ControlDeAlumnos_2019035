@@ -65,7 +65,7 @@ exports.asignCourse = async (req, res) => {
         if(err){
             res.status(500).send({status: 'Error getting the user'})
         }else{
-            if(userFound.cursos.length >= 2){
+            if(userFound.cursos.length >= 3){
                 res.status(500).send({status: "You already have 3 courses, MAX 3 COURSES"})
             }else if(userFound.cursos.find(element => element == curso)){
                 res.status(500).send({status: "You already have that course"})

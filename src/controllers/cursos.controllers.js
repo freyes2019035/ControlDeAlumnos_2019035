@@ -88,3 +88,24 @@ exports.listarCursos = (req, res) => {
         }
     })
 }
+
+exports.createDefault = (req, res) => {
+    let curso = new cursoModel();
+    curso.nombre = "default"
+
+    cursoModel.find({nombre: curso.nombre}, (err, resp) => {
+        if(err){
+            res.status(500).send(err);
+        }else if(resp && resp.length >= 1){
+            console.log({status: 'Default curse already exists'})
+        }else{
+            curso.save((err, resp) => {
+                if(err){
+                    console.log(err);
+                }else{
+                    console.log([{status: "Default Curse created"}, {resp}])
+                }
+            })
+        }
+    })
+}

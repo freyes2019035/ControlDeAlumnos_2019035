@@ -6,9 +6,9 @@ const port = 3000;
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const createProfessor = require('./src/controllers/profesores.controller')
+const createCurseDefault = require('./src/controllers/cursos.controllers')
 const cursosRoutes = require('./src/routes/cursos.routes')
 const alumnosRoutes = require('./src/routes/user.routes');
-const profesoresRoutes = require('./src/routes/profesores.routes');
 const authRoutes = require('./src/routes/auth.routes')
 // Start App
 const startServer = (port) => {
@@ -33,6 +33,7 @@ dbService
       console.log(resolved);
       startServer(port);
       createProfessor.createDefault('Maestro','Maestro', 12345);
+      createCurseDefault.createDefault();
     }
   })
   .catch((err) => {
